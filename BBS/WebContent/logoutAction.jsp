@@ -8,8 +8,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width", initial-scale="1">
+<meta http-equiv="Content-Type" charset="UTF-8">
 <title>JSP 게시판 웹 사이트</title>
 </head>
 <body>
