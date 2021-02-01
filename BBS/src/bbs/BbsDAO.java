@@ -13,10 +13,16 @@ public class BbsDAO {
 	
 	public BbsDAO() {
 		try {
-			String dbURL= "jdbc:mysql://localhost:33060/BBS";
-			String dbID = "root";
-			String dbPassword = "root";
-			Class.forName("com.mysql.jdbc.Driver");
+//			String dbURL= "jdbc:mysql://localhost:33060/BBS";
+//			String dbID = "root";
+//			String dbPassword = "root";
+//			Class.forName("com.mysql.jdbc.Driver");
+			
+			// 프로젝트 폴더 우클릭 properties >> java build path >> 디비에 맞는 connector jar 추가
+			String dbURL= "jdbc:mariadb://140.238.19.235:3306/bbs";
+			String dbID = "admin";
+			String dbPassword = "admin";
+			Class.forName("org.mariadb.jdbc.Driver");
 			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -38,7 +44,7 @@ public class BbsDAO {
 	}
 	
 	public int getNext() {
-		String SQL = "SELECT bbsID FROM BBS ORDER BY bbsID DESC";
+		String SQL = "SELECT bbsID FROM bbs ORDER BY bbsID DESC";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			rs = pstmt.executeQuery();
@@ -53,7 +59,7 @@ public class BbsDAO {
 	}
 	
 	public int write(String bbsTitle, String userID, String bbsContent) {
-		String SQL = "INSERT INTO BBS VALUES (?, ?, ?, ?, ?, ?)";
+		String SQL = "INSERT INTO bbs VALUES (?, ?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, getNext());
@@ -70,7 +76,7 @@ public class BbsDAO {
 	}
 	
 	public ArrayList<Bbs> getList(int pageNumber) {
-		String SQL = "SELECT * FROM BBS WHERE bbsID < ? AND bbsAvailable = 1 ORDER BY bbsID DESC LIMIT 10";
+		String SQL = "SELECT * FROM bbs WHERE bbsID < ? AND bbsAvailable = 1 ORDER BY bbsID DESC LIMIT 10";
 		ArrayList<Bbs> list = new ArrayList<Bbs>();
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
@@ -93,7 +99,7 @@ public class BbsDAO {
 	}
 	
 	public boolean nextPage(int pageNumber) {
-		String SQL = "SELECT * FROM BBS WHERE bbsID < ? AND bbsAvailable = 1 ORDER BY bbsID DESC LIMIT 10";
+		String SQL = "SELECT * FROM bbs WHERE bbsID < ? AND bbsAvailable = 1 ORDER BY bbsID DESC LIMIT 10";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1,  getNext() - (pageNumber - 1) * 10 );
@@ -108,7 +114,7 @@ public class BbsDAO {
 	}
 	
 	public Bbs getBbs(int bbsID) {
-		String SQL = "SELECT * FROM BBS WHERE bbsID = ?";
+		String SQL = "SELECT * FROM bbs WHERE bbsID = ?";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1,  bbsID);
@@ -130,7 +136,7 @@ public class BbsDAO {
 	}
 	
 	public int update(int bbsID, String bbsTitle, String bbsContent) {
-		String SQL = "UPDATE BBS SET bbsTitle = ?, bbsContent = ? WHERE bbsID = ?";
+		String SQL = "UPDATE bbs SET bbsTitle = ?, bbsContent = ? WHERE bbsID = ?";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1,  bbsTitle);
@@ -144,7 +150,7 @@ public class BbsDAO {
 	}
 	
 	public int delete(int bbsID) {
-		String SQL = "UPDATE BBS SET bbsAvailable = 0 WHERE bbsID = ?";
+		String SQL = "UPDATE bbs SET bbsAvailable = 0 WHERE bbsID = ?";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1,  bbsID);

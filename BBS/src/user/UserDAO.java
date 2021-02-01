@@ -14,10 +14,16 @@ public class UserDAO {
 	
 	public UserDAO() {
 		try {
-			String dbURL= "jdbc:mysql://localhost:33060/BBS";
-			String dbID = "root";
-			String dbPassword = "root";
-			Class.forName("com.mysql.jdbc.Driver");
+//			String dbURL= "jdbc:mysql://localhost:33060/BBS";
+//			String dbID = "root";
+//			String dbPassword = "root";
+//			Class.forName("com.mysql.jdbc.Driver");
+			
+			// 프로젝트 폴더 우클릭 properties >> java build path >> 디비에 맞는 connector jar 추가
+			String dbURL= "jdbc:mariadb://140.238.19.235:3306/bbs";
+			String dbID = "admin";
+			String dbPassword = "admin";
+			Class.forName("org.mariadb.jdbc.Driver");
 			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -27,6 +33,7 @@ public class UserDAO {
 	public int login(String userID, String userPassword) {
 		String SQL = "select userPassword from user where userID = ?";
 		try {
+//			System.out.println("[" + userID + "]");
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1,  userID);
 			rs = pstmt.executeQuery();

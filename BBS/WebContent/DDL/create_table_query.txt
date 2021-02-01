@@ -1,4 +1,4 @@
-create table USER (
+create table user (
 	userID varchar(20),
 	userPassword varchar(20),
 	userName varchar(20),
@@ -7,7 +7,7 @@ create table USER (
 	PRIMARY KEY (userID)
 );
 
-create table BBS (
+create table bbs (
 	bbsID int,
 	bbsTitle varchar(50),
 	userID varchar(20),
