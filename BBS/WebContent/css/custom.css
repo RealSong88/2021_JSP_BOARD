@@ -1,0 +1,9 @@
+@import url(http://fonts.googleapis.com/earlyaccess/roboto.css);
+@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+
+* {
+	font-family : 'Roboto';
+}
+h1 {
+	font-family : 'Hanna';
+}
